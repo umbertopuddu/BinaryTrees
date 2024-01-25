@@ -79,7 +79,7 @@ public class BinaryTreePanel<T> extends JPanel {
     private void calculateNodePositions(BinaryTree.Node node, int x, int y, int depth, int levelWidth, Graphics g) {
         if (node != null) {
             int stringWidth = g.getFontMetrics().stringWidth(String.valueOf(node.getData()));
-            int horizontalSpacing = (int) ((15 * Math.pow(2, maxDepth - depth)) * zoom) + stringWidth;
+            int horizontalSpacing = (int) (((15 + stringWidth) * Math.pow(2, maxDepth - depth)) * zoom);
 
             if (node.getLeft() != null) {
                 calculateNodePositions(node.getLeft(), x - horizontalSpacing / 2, y + yOffset, depth + 1, levelWidth, g);
