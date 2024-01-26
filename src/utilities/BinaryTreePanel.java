@@ -15,6 +15,9 @@ public class BinaryTreePanel<T> extends JPanel {
     private int panOffsetY = 0;
     private Point lastMousePosition;
     private final int maxDepth;
+    private Timer panTimer;
+    private int panDeltaX = 0;
+    private int panDeltaY = 0;
 
     public BinaryTreePanel(BinaryTree<T> binaryTree) {
         this.binaryTree = binaryTree;
@@ -47,28 +50,44 @@ public class BinaryTreePanel<T> extends JPanel {
         add(zoomInButton);
         add(zoomOutButton);
 
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int panStep = 30;
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_LEFT:
-                        panOffsetX += panStep;
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        panOffsetX -= panStep;
-                        break;
-                    case KeyEvent.VK_UP:
-                        panOffsetY += panStep;
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        panOffsetY -= panStep;
-                        break;
+        panTimer = new Timer(40, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    panOffsetX += panDeltaX;
+                    panOffsetY += panDeltaY;
+                    updateTree(binaryTree);
                 }
-                updateTree(binaryTree);
-            }
+            });
+    
+            addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    int panStep = 5;
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_LEFT:
+                            panDeltaX = panStep;
+                            break;
+                        case KeyEvent.VK_RIGHT:
+                            panDeltaX = -panStep;
+                            break;
+                        case KeyEvent.VK_UP:
+                            panDeltaY = panStep;
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            panDeltaY = -panStep;
+                            break;
+                    }
+                    panTimer.start();
+                }
+    
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    panTimer.stop();
+                    panDeltaX = 0;
+                    panDeltaY = 0;
+                }
         });
+
 
         setFocusable(true);
         requestFocusInWindow();
