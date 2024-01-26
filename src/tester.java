@@ -14,7 +14,7 @@ public class tester{
         
         //Create a binary search tree either blank [pass no parameters]
         //or with elements [pass elements divided by comma]
-        BinarySearchTree<Integer> two = new BinarySearchTree(0,1,2,3,5,6,7);
+        BinarySearchTree<Integer> two = new BinarySearchTree(0,1,2,3,5,6,7,8,9);
         
         //NOTE: The BinarySearchTree can only store object from subclasses of
         //the Comparable class (i.e. all types of numbers, Strings, ...)
@@ -27,3 +27,8 @@ public class tester{
         BinaryTreeVisualizer visual = new BinaryTreeVisualizer(two /*here you pass your tree object to be displayed*/);
     }
 }
+
+/* INSTRUCTIONS FOR THE VISUALIZER:
+ - Use the arrows to move the image/view up, down, left, or right.
+ - Use the "Zoom In" and "Zoom Out" buttons to enlarge or reduce the image/view.
+*/
