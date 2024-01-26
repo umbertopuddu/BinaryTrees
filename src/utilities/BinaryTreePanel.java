@@ -79,7 +79,7 @@ public class BinaryTreePanel<T> extends JPanel {
     private void calculateNodePositions(BinaryTree.Node node, int x, int y, int depth, int levelWidth, Graphics g) {
         if (node != null) {
             int stringWidth = g.getFontMetrics().stringWidth(String.valueOf(node.getData()));
-            int horizontalSpacing = (int) (((15 + stringWidth) * Math.pow(2, maxDepth - depth)) * zoom);
+            int horizontalSpacing = (int) (((45 + 1/2*stringWidth) * Math.pow(2, maxDepth - depth)) * zoom);
 
             if (node.getLeft() != null) {
                 calculateNodePositions(node.getLeft(), x - horizontalSpacing / 2, y + yOffset, depth + 1, levelWidth, g);
@@ -109,12 +109,17 @@ public class BinaryTreePanel<T> extends JPanel {
         if (node != null) {
             Point nodePos = nodePositions.get(node);
     
+            // Set the new font size
+            Font myFont = new Font(g.getFont().getName(), g.getFont().getStyle(), (int)(14*zoom));
+            g.setFont(myFont);
+            
             String nodeData = String.valueOf(node.getData());
     
+            // Now metrics should be calculated with the new font
             FontMetrics metrics = g.getFontMetrics();
             int stringWidth = metrics.stringWidth(nodeData);
             int stringHeight = metrics.getHeight();
-    
+                
             int horizontalPadding = 10;
             int verticalPadding = 5;
             int ovalWidth = stringWidth + horizontalPadding;
