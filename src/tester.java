@@ -13,7 +13,7 @@ public class tester{
         one.addNode("See you later", one.getRoot(), true);
         
         //Create a binary search tree either blank [pass no parameters]
-        //or with elements [pass elements divided by comma]
+        //or with elements [pass elements divided by comma or an array]
         BinarySearchTree<Integer> two = new BinarySearchTree(0,1,2,3,5,6,7,8,9);
         
         //NOTE: The BinarySearchTree can only store object from subclasses of
