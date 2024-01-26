@@ -50,42 +50,42 @@ public class BinaryTreePanel<T> extends JPanel {
         add(zoomInButton);
         add(zoomOutButton);
 
-        panTimer = new Timer(40, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    panOffsetX += panDeltaX;
-                    panOffsetY += panDeltaY;
-                    updateTree(binaryTree);
+        panTimer = new Timer(20, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panOffsetX += panDeltaX;
+                panOffsetY += panDeltaY;
+                updateTree(binaryTree);
+            }
+        });
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int panStep = 5;
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        panDeltaX = panStep;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        panDeltaX = -panStep;
+                        break;
+                    case KeyEvent.VK_UP:
+                        panDeltaY = panStep;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        panDeltaY = -panStep;
+                        break;
                 }
-            });
-    
-            addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    int panStep = 5;
-                    switch (e.getKeyCode()) {
-                        case KeyEvent.VK_LEFT:
-                            panDeltaX = panStep;
-                            break;
-                        case KeyEvent.VK_RIGHT:
-                            panDeltaX = -panStep;
-                            break;
-                        case KeyEvent.VK_UP:
-                            panDeltaY = panStep;
-                            break;
-                        case KeyEvent.VK_DOWN:
-                            panDeltaY = -panStep;
-                            break;
-                    }
-                    panTimer.start();
-                }
-    
-                @Override
-                public void keyReleased(KeyEvent e) {
-                    panTimer.stop();
-                    panDeltaX = 0;
-                    panDeltaY = 0;
-                }
+                panTimer.start();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                panTimer.stop();
+                panDeltaX = 0;
+                panDeltaY = 0;
+            }
         });
 
 
@@ -127,30 +127,30 @@ public class BinaryTreePanel<T> extends JPanel {
     private void drawTree(Graphics g, BinaryTree.Node node) {
         if (node != null) {
             Point nodePos = nodePositions.get(node);
-    
+
             // Set the new font size
             Font myFont = new Font(g.getFont().getName(), g.getFont().getStyle(), (int)(14*zoom));
             g.setFont(myFont);
-            
+
             String nodeData = String.valueOf(node.getData());
-    
+
             // Now metrics should be calculated with the new font
             FontMetrics metrics = g.getFontMetrics();
             int stringWidth = metrics.stringWidth(nodeData);
             int stringHeight = metrics.getHeight();
-                
+
             int horizontalPadding = 10;
             int verticalPadding = 5;
             int ovalWidth = stringWidth + horizontalPadding;
             int ovalHeight = stringHeight + verticalPadding;
-    
+
             int textX = nodePos.x - stringWidth / 2;
             int textY = nodePos.y + stringHeight / 4;
-    
+
             g.setColor(Color.BLACK);
             g.drawOval(nodePos.x - ovalWidth / 2, nodePos.y - ovalHeight / 2, ovalWidth, ovalHeight);
             g.drawString(nodeData, textX, textY);
-    
+
             if (node.getParent() != null) {
                 Point parentPos = nodePositions.get(node.getParent());
                 int lineStartX = nodePos.x;
@@ -159,7 +159,7 @@ public class BinaryTreePanel<T> extends JPanel {
                 int lineEndY = parentPos.y + ovalHeight / 2;
                 g.drawLine(lineStartX, lineStartY, lineEndX, lineEndY);
             }
-    
+
             drawTree(g, node.getLeft());
             drawTree(g, node.getRight());
         }
