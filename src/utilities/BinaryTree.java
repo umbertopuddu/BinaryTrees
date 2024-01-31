@@ -36,7 +36,7 @@ public class BinaryTree<T> {
             return right;
         }
         
-        T getData(){
+        public T getData(){
             return data;
         }
         
@@ -221,8 +221,6 @@ public class BinaryTree<T> {
         this.setRoot(balancedTree(sortedList, 0, sortedList.size() - 1));
     }
 
-    
-    
     public Node getRoot(){
         return root;
     }
